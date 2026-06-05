@@ -14,11 +14,12 @@
   "dependencies": {
     "@astrojs/check": "latest",
     "@astrojs/rss": "latest",
-    "astro": "latest",
+    "astro": "^5.18.2",
     "typescript": "latest"
   },
   "devDependencies": {
     "@playwright/test": "latest",
+    "@types/node": "^25.9.1",
     "vitest": "latest"
   }
 }
