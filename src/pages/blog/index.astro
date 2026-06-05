@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = getPublishedPosts(await getCollection('blog'));
+---
+
+<Layout title="文章" description="Jockie 的全部已发布文章。">
+  <section class="section">
+    <SectionHeader title="文章" description="技术、项目、读书和随笔的混合记录。" />
+    <div class="post-list">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</Layout>

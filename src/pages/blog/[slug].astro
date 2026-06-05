@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import TagList from '../../components/TagList.astro';
+import { formatDate, getPublishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = getPublishedPosts(await getCollection('blog'));
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <article class="article">
+    <header>
+      <h1>{post.data.title}</h1>
+      <div class="post-meta">
+        <span>{formatDate(post.data.pubDate)}</span>
+        {post.data.updatedDate && <span>更新于 {formatDate(post.data.updatedDate)}</span>}
+        <span>{post.data.category}</span>
+      </div>
+      <TagList tags={post.data.tags ?? []} />
+    </header>
+    <div class="article-body">
+      <Content />
+    </div>
+  </article>
+</Layout>
