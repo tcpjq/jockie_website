@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const siteName = 'Jockie';
+const { title = siteName, description = 'Jockie 的个人主页和混合型博客。' } = Astro.props;
+const pageTitle = title === siteName ? siteName : `${title} | ${siteName}`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" type="application/rss+xml" title="Jockie RSS" href="/rss.xml" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Jockie</a>
+        <nav class="nav-links" aria-label="主导航">
+          <a href="/blog">文章</a>
+          <a href="/tags">标签</a>
+          <a href="/about">关于</a>
+          <a href="/rss.xml">RSS</a>
+        </nav>
+      </header>
+      <main class="main-content">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <span>© 2026 Jockie. Built with Astro.</span>
+      </footer>
+    </div>
+  </body>
+</html>

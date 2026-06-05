@@ -1,0 +1,23 @@
+---
+import type { BlogPostLike } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: BlogPostLike;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <a href={`/blog/${post.slug}`}>
+    <h3>{post.data.title}</h3>
+    <p>{post.data.description}</p>
+  </a>
+  <div class="post-meta">
+    <span>{formatDate(post.data.pubDate)}</span>
+    <span>{post.data.category}</span>
+  </div>
+  <TagList tags={post.data.tags ?? []} />
+</article>

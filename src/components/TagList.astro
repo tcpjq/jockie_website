@@ -1,0 +1,13 @@
+---
+import { getTagSlug } from '../lib/posts';
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<ul class="tag-cloud" aria-label="标签">
+  {tags.map((tag) => <li><a class="tag-link" href={`/tags/${getTagSlug(tag)}`}>{tag}</a></li>)}
+</ul>
