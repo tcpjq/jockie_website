@@ -188,7 +188,7 @@ git commit -m "chore: initialize astro blog project"
 - Create: `src/lib/posts.ts`
 - Create: `src/lib/posts.test.ts`
 
-- [ ] **Step 1: 写文章工具函数测试**
+- [x] **Step 1: 写文章工具函数测试**
 
 Create `src/lib/posts.test.ts`:
 
@@ -275,13 +275,13 @@ describe('post helpers', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `npm run test -- src/lib/posts.test.ts`
 
 Expected: FAIL，错误包含 `Cannot find module './posts'`。
 
-- [ ] **Step 3: 实现内容集合和工具函数**
+- [x] **Step 3: 实现内容集合和工具函数**
 
 Create `src/content.config.ts`:
 
@@ -433,13 +433,13 @@ featured: true
 这篇文章只用于验证 `draft: true` 的过滤逻辑。
 ```
 
-- [ ] **Step 4: 运行单元测试确认通过**
+- [x] **Step 4: 运行单元测试确认通过**
 
 Run: `npm run test -- src/lib/posts.test.ts`
 
 Expected: PASS，5 个测试通过。
 
-- [ ] **Step 5: 提交内容模型和工具函数**
+- [x] **Step 5: 提交内容模型和工具函数**
 
 ```bash
 git add src/content.config.ts src/content/blog src/lib/posts.ts src/lib/posts.test.ts
