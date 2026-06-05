@@ -1,180 +1,180 @@
-# Personal Blog Design
+# 个人博客设计
 
-Date: 2026-06-05
+日期：2026-06-05
 
-## Goal
+## 目标
 
-Build a personal homepage-style blog with Astro. The site publishes mixed content such as technical articles, essays, reading notes, and project logs. Articles are written as local Markdown files, with the structure kept simple enough for a first version and open to future MDX support.
+使用 Astro 搭建一个个人主页型博客。站点用于发布混合型内容，包括技术文章、个人随笔、读书笔记和项目记录。文章以本地 Markdown 文件编写，第一版保持结构简单，同时为后续支持 MDX 留出空间。
 
-## Recommended Approach
+## 推荐方案
 
-Use Astro as a static site generator with Content Collections for Markdown content. The first version will be a static site with no database, no login system, and no web-based admin UI.
+使用 Astro 作为静态站点生成器，并通过 Content Collections 管理 Markdown 内容。第一版是纯静态站点，不引入数据库、登录系统或网页后台。
 
-This approach fits the current repository because it is nearly empty and has no existing framework constraints. It also fits the writing workflow: articles can live in Git as `.md` files, be reviewed like code, and deploy as static pages.
+这个方案适合当前仓库状态：仓库几乎为空，没有既有框架约束。它也适合个人写作工作流：文章作为 `.md` 文件保存在 Git 中，可以像代码一样审阅和部署，最终生成静态页面。
 
-## Scope
+## 范围
 
-### In Scope
+### 第一版包含
 
-- Astro project scaffold.
-- Personal homepage with profile, writing themes, featured articles, recent articles, and project or social links.
-- Blog index page.
-- Blog detail pages generated from Markdown.
-- Tag index page.
-- Individual tag pages.
-- About page.
-- RSS feed.
-- Basic SEO metadata.
-- Responsive layout for desktop and mobile.
-- Markdown support for headings, lists, links, images, blockquotes, tables, and code blocks.
+- Astro 项目脚手架。
+- 个人主页：展示个人简介、写作主题、精选文章、最近文章、项目或外部链接。
+- 博客列表页。
+- 从 Markdown 生成的文章详情页。
+- 标签总览页。
+- 单个标签的文章列表页。
+- 关于页。
+- RSS 订阅。
+- 基础 SEO 元数据。
+- 桌面端和移动端响应式布局。
+- Markdown 基础能力：标题、列表、链接、图片、引用、表格和代码块。
 
-### Out of Scope
+### 第一版不包含
 
-- Web admin or CMS editing interface.
-- Database-backed posts.
-- Login system.
-- Comments, likes, or user accounts.
-- Full-text search.
-- MDX components in articles.
-- Multi-language routing.
-- Analytics integration.
+- 网页后台或 CMS 编辑界面。
+- 数据库文章存储。
+- 登录系统。
+- 评论、点赞或用户账号。
+- 全文搜索。
+- 在文章中使用 MDX 组件。
+- 多语言路由。
+- 数据分析集成。
 
-## Information Architecture
+## 信息架构
 
-### Routes
+### 路由
 
-- `/`: homepage.
-- `/blog`: all published posts in reverse chronological order.
-- `/blog/[slug]`: individual post pages.
-- `/tags`: all tags used by published posts.
-- `/tags/[tag]`: posts filtered by tag.
-- `/about`: extended personal introduction.
-- `/rss.xml`: RSS feed.
+- `/`：首页。
+- `/blog`：全部已发布文章，按发布时间倒序排列。
+- `/blog/[slug]`：文章详情页。
+- `/tags`：全部已发布文章使用过的标签。
+- `/tags/[tag]`：按标签筛选后的文章列表。
+- `/about`：更完整的个人介绍。
+- `/rss.xml`：RSS 订阅。
 
-### Homepage
+### 首页
 
-The homepage is the primary entry point, not a marketing landing page. It should quickly communicate who the site belongs to, what topics appear here, and where to start reading.
+首页是站点的主要入口，不做营销式落地页。它需要快速说明这个站点属于谁、主要写什么、读者可以从哪里开始阅读。
 
-Sections:
+首页区块：
 
-- Profile introduction.
-- Writing themes for mixed content, such as technology, notes, essays, and projects.
-- Featured posts.
-- Recent posts.
-- Project or external links.
+- 个人简介。
+- 混合型写作主题，例如技术、笔记、随笔和项目。
+- 精选文章。
+- 最近文章。
+- 项目或外部链接。
 
-### Blog Index
+### 博客列表页
 
-The blog index lists all non-draft posts by publication date. Each item shows title, description, date, category, and tags.
+博客列表页展示全部非草稿文章，按发布时间倒序排列。每个条目展示标题、摘要、日期、分类和标签。
 
-### Post Page
+### 文章详情页
 
-Each post page renders Markdown with readable typography, stable content width, publication metadata, tags, and basic SEO fields.
+文章详情页渲染 Markdown 内容，并提供适合阅读的排版、稳定的正文宽度、发布时间信息、标签和基础 SEO 信息。
 
-### Tags
+### 标签
 
-Tags provide lightweight organization across mixed content. Categories are broader and appear on posts, while tags are more flexible and many-to-many.
+标签用于对混合型内容做轻量组织。分类是更粗粒度的文章归属，标签则更灵活，允许一篇文章对应多个标签。
 
-## Content Model
+## 内容模型
 
-Posts are stored under `src/content/blog/` as Markdown files.
+文章存放在 `src/content/blog/` 目录下，格式为 Markdown 文件。
 
-Example frontmatter:
+frontmatter 示例：
 
 ```yaml
-title: "Article title"
-description: "Short summary for lists, RSS, and SEO."
+title: "文章标题"
+description: "用于列表、RSS 和 SEO 的简短摘要。"
 pubDate: 2026-06-05
 updatedDate: 2026-06-05
-category: "Technology"
-tags: ["Astro", "Blog"]
+category: "技术"
+tags: ["Astro", "博客"]
 draft: false
 featured: true
 ```
 
-Fields:
+字段说明：
 
-- `title`: required string.
-- `description`: required string.
-- `pubDate`: required date.
-- `updatedDate`: optional date.
-- `category`: required string.
-- `tags`: optional string array, defaulting to an empty array.
-- `draft`: optional boolean, defaulting to false.
-- `featured`: optional boolean, defaulting to false.
+- `title`：必填字符串。
+- `description`：必填字符串。
+- `pubDate`：必填日期。
+- `updatedDate`：可选日期。
+- `category`：必填字符串。
+- `tags`：可选字符串数组，默认空数组。
+- `draft`：可选布尔值，默认 false。
+- `featured`：可选布尔值，默认 false。
 
-Draft posts must not appear in production lists, generated routes, tags, or RSS.
+草稿文章不能出现在生产环境的文章列表、生成路由、标签页或 RSS 中。
 
-## Architecture
+## 架构
 
 ### Astro Content Collections
 
-Define a `blog` collection with schema validation for frontmatter. Pages query this collection instead of scanning files manually. This keeps content data typed and catches malformed posts during development or build.
+定义一个 `blog` 内容集合，并为 frontmatter 设置 schema 校验。页面通过内容集合查询文章，而不是手动扫描文件。这样可以让内容数据具备类型约束，并在开发或构建阶段发现格式错误的文章。
 
-### Components
+### 组件
 
-Expected components:
+预期组件：
 
-- `Layout`: shared HTML shell, metadata, navigation, and footer.
-- `PostCard`: compact post preview for lists.
-- `TagList`: normalized tag links.
-- `ProfileIntro`: homepage introduction block.
-- `SectionHeader`: reusable section heading for homepage areas.
+- `Layout`：共享 HTML 外壳、元数据、导航和页脚。
+- `PostCard`：文章列表中的紧凑文章预览。
+- `TagList`：标准化标签链接。
+- `ProfileIntro`：首页个人简介区块。
+- `SectionHeader`：首页区块标题组件。
 
-These components should stay small and presentation-focused. Content querying belongs in pages or collection helpers rather than deeply inside visual components.
+这些组件应保持小而清晰，主要负责展示。内容查询逻辑应放在页面或内容工具函数中，而不是深藏在视觉组件内部。
 
-### Utilities
+### 工具函数
 
-Expected helpers:
+预期工具函数：
 
-- Fetch all published posts.
-- Sort posts by publication date.
-- Fetch featured posts.
-- Derive all tags from published posts.
-- Normalize tag slugs for tag routes.
+- 获取全部已发布文章。
+- 按发布时间排序文章。
+- 获取精选文章。
+- 从已发布文章中提取全部标签。
+- 将标签规范化为可用于路由的 slug。
 
-## Visual Design
+## 视觉设计
 
-The site should feel like a personal homepage with a strong reading experience:
+站点整体应是个人主页型，并优先保证阅读体验：
 
-- Clean top navigation.
-- Calm, readable typography.
-- Homepage sections that are easy to scan.
-- Article pages with constrained line length.
-- Cards used for repeated article items only.
-- Responsive layout that preserves readable text and avoids cramped controls on mobile.
+- 清晰的顶部导航。
+- 克制、易读的文字排版。
+- 首页区块易于浏览和扫描。
+- 文章页正文宽度受控，适合长文阅读。
+- 卡片只用于重复出现的文章条目。
+- 响应式布局需要在移动端保持文字可读，避免控件拥挤。
 
-The design should avoid a heavy marketing-style hero. The first viewport should still make the owner and purpose of the site clear.
+设计上避免厚重的营销式 hero。首屏仍然需要清楚传达站点所有者和站点用途。
 
-## Error Handling
+## 错误处理
 
-- Missing post route: Astro should return a normal 404.
-- Draft post route in production: draft posts should not generate routes.
-- Invalid frontmatter: build should fail through content collection schema validation.
-- Empty tag result: tag routes should only be generated from existing published tags.
+- 访问不存在的文章路由：返回常规 404。
+- 生产环境访问草稿文章：草稿不生成路由。
+- frontmatter 无效：通过内容集合 schema 校验让构建失败。
+- 空标签结果：标签路由只从已发布文章中真实存在的标签生成。
 
-## Testing And Verification
+## 测试与验证
 
-Verification should include:
+验证范围：
 
-- Build succeeds.
-- Type checking succeeds if configured by the scaffold.
-- Homepage renders.
-- Blog index renders published posts.
-- Post detail route renders Markdown.
-- Draft posts are excluded from lists, generated pages, tags, and RSS.
-- Tag routes include only matching published posts.
-- RSS includes published posts only.
-- Basic responsive checks for desktop and mobile widths.
+- 构建成功。
+- 如果脚手架配置了类型检查，类型检查需要通过。
+- 首页可以正常渲染。
+- 博客列表页可以展示已发布文章。
+- 文章详情页可以渲染 Markdown。
+- 草稿文章不会出现在列表、生成页面、标签和 RSS 中。
+- 标签页只展示匹配的已发布文章。
+- RSS 只包含已发布文章。
+- 桌面端和移动端基础响应式检查通过。
 
-## Future Extensions
+## 后续扩展
 
-Possible later additions:
+后续可以考虑：
 
-- MDX support for interactive posts.
-- Full-text search.
-- Comment system.
-- Analytics.
-- Newsletter or email subscription.
-- CMS-backed editing with Git-based content storage.
-- Series pages for long-form notes or tutorials.
+- 支持 MDX，用于交互式文章。
+- 全文搜索。
+- 评论系统。
+- 数据分析。
+- Newsletter 或邮件订阅。
+- 基于 Git 内容存储的 CMS 编辑能力。
+- 为长篇笔记或教程增加系列页。
