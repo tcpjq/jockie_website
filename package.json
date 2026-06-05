@@ -12,14 +12,14 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/check": "latest",
-    "@astrojs/rss": "latest",
-    "astro": "^5.18.2",
-    "typescript": "latest"
+    "@astrojs/check": "0.9.9",
+    "@astrojs/rss": "4.0.18",
+    "astro": "5.18.2",
+    "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@playwright/test": "latest",
-    "@types/node": "^25.9.1",
-    "vitest": "latest"
+    "@playwright/test": "1.60.0",
+    "@types/node": "20.19.41",
+    "vitest": "4.1.8"
   }
 }
