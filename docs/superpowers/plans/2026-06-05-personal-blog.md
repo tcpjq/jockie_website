@@ -456,7 +456,7 @@ git commit -m "feat: add markdown content model"
 - Create: `src/components/ProfileIntro.astro`
 - Create: `src/components/SectionHeader.astro`
 
-- [ ] **Step 1: 创建全局样式**
+- [x] **Step 1: 创建全局样式**
 
 Create `src/styles/global.css`:
 
@@ -732,7 +732,7 @@ img {
 }
 ```
 
-- [ ] **Step 2: 创建组件**
+- [x] **Step 2: 创建组件**
 
 Create `src/components/Layout.astro`:
 
@@ -870,13 +870,13 @@ const { title, description, href, linkText } = Astro.props;
 </div>
 ```
 
-- [ ] **Step 3: 运行 Astro 检查**
+- [x] **Step 3: 运行 Astro 检查**
 
 Run: `npm run check`
 
 Expected: FAIL，错误包含还没有页面入口或页面引用缺失。这是预期失败，下一任务会创建页面。
 
-- [ ] **Step 4: 提交展示基础组件**
+- [x] **Step 4: 提交展示基础组件**
 
 ```bash
 git add src/styles/global.css src/components
