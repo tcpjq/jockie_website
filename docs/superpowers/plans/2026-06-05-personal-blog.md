@@ -49,7 +49,7 @@
 - Create: `playwright.config.ts`
 - Modify: `README.md`
 
-- [ ] **Step 1: 创建项目配置文件**
+- [x] **Step 1: 创建项目配置文件**
 
 Create `package.json`:
 
@@ -159,19 +159,19 @@ npm run build
 文章放在 `src/content/blog/`，使用 Markdown 和 frontmatter 管理标题、摘要、日期、分类、标签、草稿和精选状态。
 ```
 
-- [ ] **Step 2: 安装依赖**
+- [x] **Step 2: 安装依赖**
 
 Run: `npm install`
 
 Expected: 生成 `package-lock.json` 和 `node_modules/`，命令退出码为 0。
 
-- [ ] **Step 3: 验证脚手架命令可用**
+- [x] **Step 3: 验证脚手架命令可用**
 
 Run: `npm run check`
 
 Expected: 失败，错误中包含缺少 Astro 源目录或页面入口的提示。这个失败是预期的，因为还没有创建 `src/pages`。
 
-- [ ] **Step 4: 提交配置初始化**
+- [x] **Step 4: 提交配置初始化**
 
 ```bash
 git add package.json package-lock.json astro.config.mjs tsconfig.json vitest.config.ts playwright.config.ts README.md
