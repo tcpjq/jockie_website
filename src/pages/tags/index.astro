@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { getAllTags, getTagSlug } from '../../lib/posts';
+import { sitePath } from '../../lib/urls';
 
 const tags = getAllTags(await getCollection('blog'));
 ---
@@ -11,7 +12,7 @@ const tags = getAllTags(await getCollection('blog'));
   <section class="section">
     <SectionHeader title="标签" description="用标签跨分类浏览技术、项目、读书和随笔。" />
     <ul class="tag-cloud">
-      {tags.map((tag) => <li><a class="tag-link" href={`/tags/${getTagSlug(tag)}`}>{tag}</a></li>)}
+      {tags.map((tag) => <li><a class="tag-link" href={sitePath(`tags/${getTagSlug(tag)}`)}>{tag}</a></li>)}
     </ul>
   </section>
 </Layout>

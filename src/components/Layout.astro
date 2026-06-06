@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { sitePath } from '../lib/urls';
 
 interface Props {
   title?: string;
@@ -20,18 +21,18 @@ const pageTitle = title === siteName ? siteName : `${title} | ${siteName}`;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link rel="alternate" type="application/rss+xml" title="Jockie RSS" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Jockie RSS" href={sitePath('rss.xml')} />
     <title>{pageTitle}</title>
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
-        <a class="brand" href="/">Jockie</a>
+        <a class="brand" href={sitePath()}>Jockie</a>
         <nav class="nav-links" aria-label="主导航">
-          <a href="/blog">文章</a>
-          <a href="/tags">标签</a>
-          <a href="/about">关于</a>
-          <a href="/rss.xml">RSS</a>
+          <a href={sitePath('blog')}>文章</a>
+          <a href={sitePath('tags')}>标签</a>
+          <a href={sitePath('about')}>关于</a>
+          <a href={sitePath('rss.xml')}>RSS</a>
         </nav>
       </header>
       <main class="main-content">

@@ -4,6 +4,7 @@ import Layout from '../../components/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { getAllTags, getPublishedPosts, getTagSlug } from '../../lib/posts';
+import { sitePath } from '../../lib/urls';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -21,7 +22,7 @@ const posts = getPublishedPosts(await getCollection('blog')).filter((post) =>
 
 <Layout title={`标签：${tag}`} description={`浏览标签 ${tag} 下的文章。`}>
   <section class="section">
-    <SectionHeader title={`标签：${tag}`} description="这个标签下的全部已发布文章。" href="/tags" linkText="全部标签" />
+    <SectionHeader title={`标签：${tag}`} description="这个标签下的全部已发布文章。" href={sitePath('tags')} linkText="全部标签" />
     <div class="post-list">
       {posts.map((post) => <PostCard post={post} />)}
     </div>

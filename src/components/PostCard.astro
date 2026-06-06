@@ -1,6 +1,7 @@
 ---
 import type { BlogPostLike } from '../lib/posts';
 import { formatDate } from '../lib/posts';
+import { sitePath } from '../lib/urls';
 import TagList from './TagList.astro';
 
 interface Props {
@@ -11,7 +12,7 @@ const { post } = Astro.props;
 ---
 
 <article class="post-card">
-  <a href={`/blog/${post.slug}`}>
+  <a href={sitePath(`blog/${post.slug}`)}>
     <h3>{post.data.title}</h3>
     <p>{post.data.description}</p>
   </a>

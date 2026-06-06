@@ -5,6 +5,7 @@ import PostCard from '../components/PostCard.astro';
 import ProfileIntro from '../components/ProfileIntro.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { getFeaturedPosts, getPublishedPosts } from '../lib/posts';
+import { sitePath } from '../lib/urls';
 
 const posts = await getCollection('blog');
 const featuredPosts = getFeaturedPosts(posts).slice(0, 2);
@@ -15,7 +16,7 @@ const recentPosts = getPublishedPosts(posts).slice(0, 4);
   <ProfileIntro />
 
   <section class="section">
-    <SectionHeader title="精选文章" description="优先推荐的技术、项目和笔记。" href="/blog" linkText="查看全部" />
+    <SectionHeader title="精选文章" description="优先推荐的技术、项目和笔记。" href={sitePath('blog')} linkText="查看全部" />
     <div class="post-grid">
       {featuredPosts.map((post) => <PostCard post={post} />)}
     </div>
@@ -32,8 +33,8 @@ const recentPosts = getPublishedPosts(posts).slice(0, 4);
     <SectionHeader title="项目与链接" description="后续可以放 GitHub、作品、社交主页或常用入口。" />
     <ul class="link-list">
       <li><a class="pill" href="https://github.com/" rel="noreferrer">GitHub</a></li>
-      <li><a class="pill" href="/about">关于我</a></li>
-      <li><a class="pill" href="/rss.xml">RSS</a></li>
+      <li><a class="pill" href={sitePath('about')}>关于我</a></li>
+      <li><a class="pill" href={sitePath('rss.xml')}>RSS</a></li>
     </ul>
   </section>
 </Layout>
