@@ -25,25 +25,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
-          cache: npm
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@10.25.0 --activate
+
       - name: Install dependencies
-        run: npm ci --include=dev --no-audit --no-fund
+        run: pnpm install --no-frozen-lockfile
 
       - name: Verify Astro CLI
-        run: ./node_modules/.bin/astro --version
+        run: pnpm exec astro --version
 
       - name: Check
-        run: npm run check
+        run: pnpm run check
 
       - name: Test
-        run: npm run test
+        run: pnpm run test
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
