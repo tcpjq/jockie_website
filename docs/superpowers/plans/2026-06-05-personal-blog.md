@@ -891,7 +891,7 @@ git commit -m "feat: add shared blog layout components"
 - Create: `src/pages/blog/[slug].astro`
 - Create: `src/pages/about.astro`
 
-- [ ] **Step 1: 创建页面**
+- [x] **Step 1: 创建页面**
 
 Create `src/pages/index.astro`:
 
@@ -1022,7 +1022,7 @@ import Layout from '../components/Layout.astro';
 </Layout>
 ```
 
-- [ ] **Step 2: 运行检查和构建**
+- [x] **Step 2: 运行检查和构建**
 
 Run: `npm run check`
 
@@ -1032,7 +1032,7 @@ Run: `npm run build`
 
 Expected: PASS，输出包含生成 `/`, `/blog`, `/blog/hello-astro`, `/blog/reading-notes`, `/about`，不包含 `/blog/draft-note`。
 
-- [ ] **Step 3: 提交核心页面**
+- [x] **Step 3: 提交核心页面**
 
 ```bash
 git add src/pages/index.astro src/pages/blog src/pages/about.astro
@@ -1046,7 +1046,7 @@ git commit -m "feat: add homepage and blog pages"
 - Create: `src/pages/tags/[tag].astro`
 - Create: `src/pages/rss.xml.ts`
 
-- [ ] **Step 1: 创建标签和 RSS 页面**
+- [x] **Step 1: 创建标签和 RSS 页面**
 
 Create `src/pages/tags/index.astro`:
 
@@ -1128,7 +1128,7 @@ export async function GET(context) {
 }
 ```
 
-- [ ] **Step 2: 运行检查和构建**
+- [x] **Step 2: 运行检查和构建**
 
 Run: `npm run check`
 
@@ -1138,7 +1138,7 @@ Run: `npm run build`
 
 Expected: PASS，输出包含 `/tags`, 至少一个 `/tags/<tag>` 和 `/rss.xml`。
 
-- [ ] **Step 3: 提交标签和 RSS**
+- [x] **Step 3: 提交标签和 RSS**
 
 ```bash
 git add src/pages/tags src/pages/rss.xml.ts

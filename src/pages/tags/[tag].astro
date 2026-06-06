@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { getAllTags, getPublishedPosts, getTagSlug } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return getAllTags(posts).map((tag) => ({
+    params: { tag: getTagSlug(tag) },
+    props: { tag }
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = getPublishedPosts(await getCollection('blog')).filter((post) =>
+  (post.data.tags ?? []).some((postTag) => getTagSlug(postTag) === getTagSlug(tag))
+);
+---
+
+<Layout title={`标签：${tag}`} description={`浏览标签 ${tag} 下的文章。`}>
+  <section class="section">
+    <SectionHeader title={`标签：${tag}`} description="这个标签下的全部已发布文章。" href="/tags" linkText="全部标签" />
+    <div class="post-list">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</Layout>
