@@ -1,13 +1,14 @@
 :root {
-  color-scheme: light;
-  --color-bg: #fbfaf7;
-  --color-surface: #ffffff;
-  --color-text: #202124;
-  --color-muted: #6b7280;
-  --color-border: #dedbd2;
-  --color-accent: #2563eb;
-  --color-accent-soft: #eff6ff;
-  --color-code-bg: #f4f4f5;
+  color-scheme: dark;
+  --color-bg: #070914;
+  --color-surface: rgba(12, 18, 34, 0.72);
+  --color-text: #f8fafc;
+  --color-muted: #a9b5c7;
+  --color-border: rgba(148, 163, 184, 0.28);
+  --color-accent: #7dd3fc;
+  --color-accent-strong: #fbbf24;
+  --color-accent-soft: rgba(125, 211, 252, 0.12);
+  --color-code-bg: rgba(15, 23, 42, 0.86);
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
@@ -17,8 +18,14 @@
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
-  background: var(--color-bg);
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(125, 211, 252, 0.22), transparent 28rem),
+    radial-gradient(circle at 78% 18%, rgba(251, 191, 36, 0.13), transparent 24rem),
+    radial-gradient(circle at 50% 110%, rgba(37, 99, 235, 0.38), transparent 34rem),
+    var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.7;
@@ -26,7 +33,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration-color: color-mix(in srgb, var(--color-accent), transparent 55%);
+  text-decoration-color: color-mix(in srgb, var(--color-accent), transparent 48%);
   text-underline-offset: 0.2em;
 }
 
@@ -40,9 +47,78 @@ img {
 }
 
 .site-shell {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  isolation: isolate;
+}
+
+.animated-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.animated-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 9, 20, 0.16), rgba(7, 9, 20, 0.86)),
+    radial-gradient(circle at 50% 42%, transparent 0 20rem, rgba(7, 9, 20, 0.44) 42rem);
+}
+
+.star-layer {
+  position: absolute;
+  inset: -12%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.96) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(125, 211, 252, 0.82) 0 1px, transparent 1.6px);
+  background-position: 0 0, 18px 24px;
+  opacity: 0.46;
+  will-change: transform;
+}
+
+.star-layer-one {
+  background-size: 52px 52px, 86px 86px;
+  animation: star-drift 46s linear infinite;
+}
+
+.star-layer-two {
+  background-size: 92px 92px, 138px 138px;
+  opacity: 0.3;
+  animation: star-drift 78s linear infinite reverse;
+}
+
+.orbital-ring {
+  position: absolute;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  border-radius: 999px;
+  box-shadow:
+    0 0 56px rgba(14, 165, 233, 0.18),
+    inset 0 0 42px rgba(251, 191, 36, 0.06);
+  will-change: transform;
+}
+
+.orbital-ring-one {
+  width: min(54vw, 520px);
+  height: min(54vw, 520px);
+  right: -120px;
+  top: 9vh;
+  animation: orbital-spin 38s linear infinite;
+}
+
+.orbital-ring-two {
+  width: min(42vw, 360px);
+  height: min(42vw, 360px);
+  left: -110px;
+  bottom: 8vh;
+  border-color: rgba(251, 191, 36, 0.15);
+  animation: orbital-spin 54s linear infinite reverse;
 }
 
 .site-header,
@@ -58,6 +134,7 @@ img {
   justify-content: space-between;
   gap: 24px;
   padding: 24px 0;
+  color: rgba(248, 250, 252, 0.9);
 }
 
 .brand {
@@ -90,12 +167,25 @@ img {
 }
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.6fr);
   gap: 32px;
   align-items: end;
   padding: 40px 0 52px;
   border-bottom: 1px solid var(--color-border);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -28px -18px;
+  z-index: -1;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.08));
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(4px);
 }
 
 .hero h1 {
@@ -134,6 +224,7 @@ img {
   color: var(--color-muted);
   font-size: 0.9rem;
   text-decoration: none;
+  backdrop-filter: blur(10px);
 }
 
 .section {
@@ -176,6 +267,15 @@ img {
   padding: 18px;
   background: var(--color-surface);
   text-decoration: none;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+  transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
+}
+
+.post-card:hover {
+  border-color: rgba(125, 211, 252, 0.48);
+  background: rgba(15, 23, 42, 0.84);
+  transform: translateY(-2px);
 }
 
 .post-card h3 {
@@ -251,6 +351,35 @@ img {
   text-align: left;
 }
 
+@keyframes star-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(72px, 96px, 0);
+  }
+}
+
+@keyframes orbital-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+  .star-layer,
+  .orbital-ring {
+    animation: none;
+  }
+}
+
 @media (max-width: 720px) {
   .site-header {
     align-items: flex-start;
@@ -265,5 +394,21 @@ img {
   .hero,
   .post-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero::before {
+    inset: -18px -12px;
+  }
+
+  .orbital-ring-one {
+    right: -170px;
+    width: 340px;
+    height: 340px;
+  }
+
+  .orbital-ring-two {
+    left: -190px;
+    width: 300px;
+    height: 300px;
   }
 }

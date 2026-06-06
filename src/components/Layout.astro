@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import AnimatedBackground from './AnimatedBackground.astro';
 import { sitePath } from '../lib/urls';
 
 interface Props {
@@ -25,6 +26,7 @@ const pageTitle = title === siteName ? siteName : `${title} | ${siteName}`;
     <title>{pageTitle}</title>
   </head>
   <body>
+    <AnimatedBackground />
     <div class="site-shell">
       <header class="site-header">
         <a class="brand" href={sitePath()}>Jockie</a>
