@@ -1227,7 +1227,7 @@ git commit -m "test: add blog site checks"
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 1: 补充 README 结构说明**
+- [x] **Step 1: 补充 README 结构说明**
 
 Modify `README.md`:
 
@@ -1270,7 +1270,7 @@ featured: true
 - `src/styles/global.css`：全局样式。
 ```
 
-- [ ] **Step 2: 运行最终验证**
+- [x] **Step 2: 运行最终验证**
 
 Run: `npm run check`
 
@@ -1288,7 +1288,7 @@ Run: `npm run test:e2e`
 
 Expected: PASS。
 
-- [ ] **Step 3: 提交 README 收尾**
+- [x] **Step 3: 提交 README 收尾**
 
 ```bash
 git add README.md
