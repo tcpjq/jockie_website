@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://jockie.dev'
+  site: 'https://jockie.github.io'
 });
