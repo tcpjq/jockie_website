@@ -1295,13 +1295,13 @@ git add README.md
 git commit -m "docs: document blog workflow"
 ```
 
-- [ ] **Step 4: 启动开发服务器**
+- [x] **Step 4: 启动开发服务器**
 
 Run: `npm run dev -- --host 127.0.0.1`
 
 Expected: Astro dev server starts and prints a local URL like `http://127.0.0.1:4321/`.
 
-- [ ] **Step 5: 报告结果**
+- [x] **Step 5: 报告结果**
 
 Final response should include:
 
