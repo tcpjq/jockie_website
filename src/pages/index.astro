@@ -2,39 +2,161 @@
 import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
 import PostCard from '../components/PostCard.astro';
-import ProfileIntro from '../components/ProfileIntro.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { getFeaturedPosts, getPublishedPosts } from '../lib/posts';
 import { sitePath } from '../lib/urls';
 
 const posts = await getCollection('blog');
-const featuredPosts = getFeaturedPosts(posts).slice(0, 2);
-const recentPosts = getPublishedPosts(posts).slice(0, 4);
+const publishedPosts = getPublishedPosts(posts);
+const featuredSource = getFeaturedPosts(posts);
+const featuredPosts = (featuredSource.length > 0 ? featuredSource : publishedPosts).slice(0, 2);
+const recentPosts = publishedPosts.slice(0, 5);
+
+const heroTags = ['技术', '项目', '读书', '复盘', 'AI 工作流', '知识库', '长期成长'];
+
+const timeTargets = [
+  {
+    label: '春节倒计时',
+    target: '2027-02-06T00:00:00+08:00',
+    date: '2027-02-06'
+  },
+  {
+    label: '今年结束',
+    target: '2027-01-01T00:00:00+08:00',
+    date: '2026-12-31'
+  },
+  {
+    label: '长期目标节点',
+    target: '2030-12-31T00:00:00+08:00',
+    date: '2030-12-31'
+  }
+];
+
+const observations = [
+  ['AI', '等待自动化拉取和摘要生成。'],
+  ['科技', '等待自动化拉取和摘要生成。'],
+  ['财经', '等待自动化拉取和摘要生成。'],
+  ['社会', '等待自动化拉取和摘要生成。']
+];
 ---
 
 <Layout title="Jockie" description="Jockie 的个人主页和混合型博客。">
-  <ProfileIntro />
-
-  <section class="section">
-    <SectionHeader title="精选文章" description="优先推荐的技术、项目和笔记。" href={sitePath('blog')} linkText="查看全部" />
-    <div class="post-grid">
-      {featuredPosts.map((post) => <PostCard post={post} />)}
+  <section class="hero home-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">个人知识基地 + 项目作品集 + 长期成长记录系统</p>
+      <h1>Jockie 的个人知识基地</h1>
+      <p>记录技术实践、项目复盘、读书笔记与长期思考，把零散资料沉淀成可复用的知识资产。</p>
     </div>
-  </section>
-
-  <section class="section">
-    <SectionHeader title="最近更新" description="按发布时间排列的最新内容。" />
-    <div class="post-list">
-      {recentPosts.map((post) => <PostCard post={post} />)}
-    </div>
-  </section>
-
-  <section class="section">
-    <SectionHeader title="项目与链接" description="后续可以放 GitHub、作品、社交主页或常用入口。" />
-    <ul class="link-list">
-      <li><a class="pill" href="https://github.com/" rel="noreferrer">GitHub</a></li>
-      <li><a class="pill" href={sitePath('about')}>关于我</a></li>
-      <li><a class="pill" href={sitePath('rss.xml')}>RSS</a></li>
+    <ul class="topic-list" aria-label="写作主题">
+      {heroTags.map((tag) => <li><span class="pill">{tag}</span></li>)}
     </ul>
   </section>
+
+  <section class="dashboard-grid" aria-label="首页仪表盘">
+    <aside class="dashboard-card time-panel">
+      <div class="panel-title">
+        <span aria-hidden="true">◷</span>
+        <h2>时间坐标</h2>
+      </div>
+      <div class="time-now">
+        <span>当前时间</span>
+        <strong id="current-time">--:--:--</strong>
+        <time id="current-date">加载中</time>
+      </div>
+      <div class="countdown-list">
+        {timeTargets.map((item) => (
+          <article class="mini-card">
+            <span>{item.label}</span>
+            <strong><span data-countdown-target={item.target}>--</span> 天</strong>
+            <time>{item.date}</time>
+          </article>
+        ))}
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <section class="dashboard-card">
+        <SectionHeader title="精选文章" description="优先推荐的技术、项目和笔记。" href={sitePath('blog')} linkText="查看全部" />
+        <div class="post-grid feature-grid">
+          {featuredPosts.map((post) => <PostCard post={post} />)}
+        </div>
+      </section>
+
+      <section class="dashboard-card">
+        <SectionHeader title="最近更新 / 文章流" description="按发布时间倒序沉淀的最新记录。" href={sitePath('blog')} linkText="更多文章" />
+        <div class="update-list">
+          {recentPosts.map((post) => (
+            <a class="update-row" href={sitePath(`blog/${post.slug}`)}>
+              <span>{post.data.title}</span>
+              <span>{post.data.category}</span>
+              <time>{post.data.pubDate.toISOString().slice(0, 10)}</time>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <aside class="side-stack">
+      <section class="dashboard-card about-card">
+        <div class="panel-title">
+          <span aria-hidden="true">J</span>
+          <h2>关于 Jockie</h2>
+        </div>
+        <div class="avatar-mark" aria-hidden="true">J</div>
+        <p>我是 Jockie，一名后端工程师，正在探索 AI 时代的软件工程提效。我关注后端架构、DDD、知识库、AI 工作流、项目复盘和个人成长。</p>
+        <a class="button-link" href={sitePath('about')}>查看更多关于我</a>
+      </section>
+
+      <section class="dashboard-card observation-card">
+        <div class="panel-title">
+          <span aria-hidden="true">◇</span>
+          <h2>昨日观察</h2>
+        </div>
+        <p>记录昨日值得关注的 AI、科技、财经和社会事件。</p>
+        <p class="muted">该模块后续将支持自动化拉取新闻，并生成摘要、分类和一句话思考。</p>
+        <div class="observation-grid">
+          {observations.map(([name, text]) => (
+            <article>
+              <strong>{name}</strong>
+              <span>{text}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+    </aside>
+  </section>
+
+  <script>
+    const timeFormatter = new Intl.DateTimeFormat('zh-CN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      weekday: 'short'
+    });
+    const dayMs = 24 * 60 * 60 * 1000;
+
+    function updateTimeCoordinate() {
+      const now = new Date();
+      const timeEl = document.getElementById('current-time');
+      const dateEl = document.getElementById('current-date');
+
+      if (timeEl) timeEl.textContent = timeFormatter.format(now);
+      if (dateEl) dateEl.textContent = dateFormatter.format(now);
+
+      document.querySelectorAll('[data-countdown-target]').forEach((el) => {
+        const target = new Date(el.getAttribute('data-countdown-target') ?? '');
+        const days = Math.max(0, Math.ceil((target.getTime() - now.getTime()) / dayMs));
+        el.textContent = String(days);
+      });
+    }
+
+    updateTimeCoordinate();
+    window.setInterval(updateTimeCoordinate, 1000);
+  </script>
 </Layout>

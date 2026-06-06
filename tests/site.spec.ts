@@ -2,10 +2,18 @@ import { expect, test } from '@playwright/test';
 
 const sitePath = (path = '') => `/jockie_website${path ? `/${path}` : '/'}`;
 
-test('首页展示个人主页内容和文章入口', async ({ page }) => {
+test('首页展示个人知识基地仪表盘和文章入口', async ({ page }) => {
   await page.goto(sitePath());
-  await expect(page.getByRole('heading', { name: 'Jockie 的个人主页' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Jockie 的个人知识基地' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '文章' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '项目' })).toHaveCount(0);
+  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '知识地图' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: '时间坐标' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '关于 Jockie' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '昨日观察' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '知识地图' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: '项目档案' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: '查看更多关于我' })).toHaveAttribute('href', sitePath('about'));
   await expect(page.getByRole('link', { name: /用 Astro 开始写作/ }).first()).toBeVisible();
 });
 
