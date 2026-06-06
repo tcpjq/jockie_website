@@ -1150,7 +1150,7 @@ git commit -m "feat: add tags and rss feed"
 **Files:**
 - Create: `tests/site.spec.ts`
 
-- [ ] **Step 1: 写 Playwright 检查**
+- [x] **Step 1: 写 Playwright 检查**
 
 Create `tests/site.spec.ts`:
 
@@ -1193,19 +1193,19 @@ test('RSS 只包含已发布文章', async ({ page }) => {
 });
 ```
 
-- [ ] **Step 2: 安装 Playwright 浏览器**
+- [x] **Step 2: 安装 Playwright 浏览器**
 
 Run: `npx playwright install chromium`
 
 Expected: chromium 安装完成，退出码为 0。
 
-- [ ] **Step 3: 运行端到端检查**
+- [x] **Step 3: 运行端到端检查**
 
 Run: `npm run test:e2e`
 
 Expected: PASS，desktop 和 mobile 两个 project 都通过。
 
-- [ ] **Step 4: 运行完整验证**
+- [x] **Step 4: 运行完整验证**
 
 Run: `npm run test`
 
@@ -1215,7 +1215,7 @@ Run: `npm run build`
 
 Expected: PASS。
 
-- [ ] **Step 5: 提交端到端验证**
+- [x] **Step 5: 提交端到端验证**
 
 ```bash
 git add tests/site.spec.ts
