@@ -15,11 +15,18 @@
     "@astrojs/check": "0.9.9",
     "@astrojs/rss": "4.0.18",
     "astro": "5.18.2",
+    "sharp": "0.34.5",
     "typescript": "5.9.3"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",
     "@types/node": "20.19.41",
     "vitest": "4.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }
