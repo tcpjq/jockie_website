@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Comments from '../../components/Comments.astro';
 import Layout from '../../components/Layout.astro';
 import TagList from '../../components/TagList.astro';
 import { formatDate, getPublishedPosts } from '../../lib/posts';
@@ -30,5 +31,6 @@ const { Content } = await render(post);
     <div class="article-body">
       <Content />
     </div>
+    <Comments />
   </article>
 </Layout>

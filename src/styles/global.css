@@ -591,6 +591,30 @@ img {
   text-align: left;
 }
 
+.comments-section {
+  margin-top: 54px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 30px;
+}
+
+.comments-section h2 {
+  margin: 0 0 18px;
+  font-size: 1.35rem;
+}
+
+.giscus {
+  min-height: 120px;
+}
+
+.comments-placeholder {
+  margin: 0;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(9, 15, 30, 0.58);
+  color: var(--color-muted);
+}
+
 @keyframes star-drift {
   from {
     transform: translate3d(0, 0, 0);
