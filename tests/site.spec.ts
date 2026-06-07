@@ -31,6 +31,34 @@ test('文章详情页渲染 Markdown 内容', async ({ page }) => {
   await expect(page.locator('pre code')).toContainText('const site');
 });
 
+test('文章详情页展示阅读目录和回到顶部入口', async ({ page }) => {
+  await page.goto(sitePath('blog/ai-tools-setup'));
+  await expect(page.locator('article > header').getByRole('heading', { name: 'AI探索：先搭工具箱，再让 AI 帮我做一个博客' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: '文章目录' }).getByRole('link', { name: '一、入门思路' })).toBeVisible();
+  const topLink = page.getByRole('link', { name: '回到顶部' });
+  await expect(topLink).toHaveAttribute('href', '#article-top');
+  await expect(page.locator('.article-body + .back-to-top')).toHaveCount(0);
+  await expect(page.locator('.article-toc .back-to-top')).toHaveCount(0);
+  await expect(page.locator('.floating-back-to-top')).toContainText('↑');
+});
+
+test('文章标签链接可以打开对应标签页', async ({ page }) => {
+  await page.goto(sitePath('blog/ai-tools-setup'));
+  await page.getByRole('link', { name: '个人博客' }).click();
+  await expect(page).toHaveURL(/\/jockie_website\/tags\/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2\/?$/);
+  await expect(page.getByRole('heading', { name: '标签：个人博客' })).toBeVisible();
+});
+
+test('文章详情页图片保持原始比例缩放', async ({ page }) => {
+  await page.goto(sitePath('blog/ai-tools-setup'));
+  const firstImage = page.getByRole('img', { name: '博客首页截图' });
+  await expect(firstImage).toBeVisible();
+
+  const box = await firstImage.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.width / box!.height).toBeCloseTo(1873 / 942, 1);
+});
+
 test('文章详情页包含评论区域', async ({ page }) => {
   await page.goto(sitePath('blog/hello-astro'));
   const comments = page.getByRole('region', { name: '评论' });

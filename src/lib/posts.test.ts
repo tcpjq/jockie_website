@@ -69,7 +69,7 @@ describe('post helpers', () => {
   });
 
   it('将标签转换为稳定路由 slug', () => {
-    expect(getTagSlug('Astro 基础')).toBe('astro-%E5%9F%BA%E7%A1%80');
+    expect(getTagSlug('Astro 基础')).toBe('astro-基础');
   });
 
   it('不会修改原始文章数组', () => {

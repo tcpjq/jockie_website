@@ -39,7 +39,7 @@ export function getAllTags<T extends BlogPostLike>(posts: T[]): string[] {
 }
 
 export function getTagSlug(tag: string): string {
-  return encodeURIComponent(tag.trim().toLowerCase().replace(/\s+/g, '-'));
+  return tag.trim().toLowerCase().replace(/\s+/g, '-');
 }
 
 export function formatDate(date: Date): string {

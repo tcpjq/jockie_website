@@ -4,6 +4,7 @@ import Comments from '../../components/Comments.astro';
 import Layout from '../../components/Layout.astro';
 import TagList from '../../components/TagList.astro';
 import { formatDate, getPublishedPosts } from '../../lib/posts';
+import { sitePath } from '../../lib/urls';
 
 export async function getStaticPaths() {
   const posts = getPublishedPosts(await getCollection('blog'));
@@ -15,22 +16,80 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+type TocItem = {
+  depth: number;
+  text: string;
+  slug: string;
+};
+
+function getHeadingSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[`*_~[\]()]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .replace(/\s+/g, '-');
+}
+
+function getTableOfContents(body: string): TocItem[] {
+  return Array.from(body.matchAll(/^(#{2,3})\s+(.+)$/gm)).map((match) => {
+    const text = match[2].replace(/\s+#+$/, '').trim();
+
+    return {
+      depth: match[1].length,
+      text,
+      slug: getHeadingSlug(text)
+    };
+  });
+}
+
+const tocItems = getTableOfContents(post.body);
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <article class="article">
-    <header>
-      <h1>{post.data.title}</h1>
-      <div class="post-meta">
-        <span>{formatDate(post.data.pubDate)}</span>
+  <div class="article-layout">
+    <aside class="article-aside" aria-label="文章信息">
+      <a class="back-link" href={sitePath('blog')}>返回文章列表</a>
+      <div class="article-info">
+        <span>发布于 {formatDate(post.data.pubDate)}</span>
         {post.data.updatedDate && <span>更新于 {formatDate(post.data.updatedDate)}</span>}
         <span>{post.data.category}</span>
       </div>
-      <TagList tags={post.data.tags ?? []} />
-    </header>
-    <div class="article-body">
-      <Content />
-    </div>
-    <Comments />
-  </article>
+    </aside>
+
+    <article class="article" id="article-top">
+      <header>
+        <h1>{post.data.title}</h1>
+        <div class="post-meta">
+          <span>{formatDate(post.data.pubDate)}</span>
+          {post.data.updatedDate && <span>更新于 {formatDate(post.data.updatedDate)}</span>}
+          <span>{post.data.category}</span>
+        </div>
+        <TagList tags={post.data.tags ?? []} />
+      </header>
+      <div class="article-body">
+        <Content />
+      </div>
+      <Comments />
+    </article>
+
+    {
+      tocItems.length > 0 && (
+        <aside class="article-toc" aria-label="文章目录">
+          <span>目录</span>
+          <nav aria-label="文章目录">
+            {tocItems.map((item) => (
+              <a class={`toc-depth-${item.depth}`} href={`#${item.slug}`}>
+                {item.text}
+              </a>
+            ))}
+          </nav>
+        </aside>
+      )
+    }
+  </div>
+  <a class="floating-back-to-top" href="#article-top" aria-label="回到顶部">
+    <span aria-hidden="true">↑</span>
+  </a>
 </Layout>
