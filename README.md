@@ -43,9 +43,9 @@ featured: true
 
 ```bash
 PUBLIC_GISCUS_REPO=tcpjq/jockie_website
-PUBLIC_GISCUS_REPO_ID=你的仓库 GraphQL ID
+PUBLIC_GISCUS_REPO_ID=R_kgDOSyDu2w
 PUBLIC_GISCUS_CATEGORY=Announcements
-PUBLIC_GISCUS_CATEGORY_ID=你的 Discussions 分类 GraphQL ID
+PUBLIC_GISCUS_CATEGORY_ID=DIC_kwDOSyDu284C-qek
 ```
 
 这些 ID 是公开标识，不是账户密码。推荐用 <https://giscus.app/zh-CN> 生成配置，再把对应值填到 GitHub Actions 或部署平台的环境变量里。缺少配置时，文章页会显示配置提示，不会加载评论脚本。

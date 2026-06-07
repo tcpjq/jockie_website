@@ -36,7 +36,7 @@ test('文章详情页包含评论区域', async ({ page }) => {
   const comments = page.getByRole('region', { name: '评论' });
   await expect(comments).toBeVisible();
   await expect(comments.locator('.giscus')).toBeVisible();
-  await expect(comments.getByText('评论功能需要完成 Giscus 配置后显示。')).toBeVisible();
+  await expect(comments.getByText('评论功能需要完成 Giscus 配置后显示。')).toHaveCount(0);
 });
 
 test('标签页只展示对应标签文章', async ({ page }) => {
